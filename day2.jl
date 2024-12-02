@@ -12,10 +12,7 @@ function is_safe_by_removing_one_level(levels)
         [levels[i] for i in 1:length(levels) if i != skipped]
         for skipped in 1:length(levels)
     ]
-    return any(
-        is_safe,
-        combinations
-    )
+    return any(is_safe, combinations)
 end
 
 # part1
