@@ -19,7 +19,7 @@ data = input()
 
 part1(data) = sum(is_safe, data)
 
-part2(data) = sum(is_safe_by_removing_one_level, input())
+part2(data) = sum(is_safe_by_removing_one_level, data)
 
 #= Benchmark results:
 
@@ -36,15 +36,15 @@ BenchmarkTools.Trial: 10000 samples with 1 evaluation.
  Memory estimate: 101.44 KiB, allocs estimate: 2000.
 
 julia> @benchmark part2($data)
-BenchmarkTools.Trial: 5995 samples with 1 evaluation.
- Range (min … max):  697.708 μs …  29.670 ms  ┊ GC (min … max):  0.00% … 96.96%
- Time  (median):     722.042 μs               ┊ GC (median):     0.00%
- Time  (mean ± σ):   832.755 μs ± 689.178 μs  ┊ GC (mean ± σ):  12.11% ± 14.16%
+BenchmarkTools.Trial: 5723 samples with 1 evaluation.
+ Range (min … max):  676.292 μs …  24.542 ms  ┊ GC (min … max):  0.00% … 96.59%
+ Time  (median):     703.459 μs               ┊ GC (median):     0.00%
+ Time  (mean ± σ):   870.484 μs ± 848.278 μs  ┊ GC (mean ± σ):  12.05% ± 13.65%
 
-  █▄▂▁                                                          ▁
-  ████▇▆▃▃▃▁▁▁▁▃▁▁▃▁▁▁▄▁▄▃▁▁▃▁▁▁▁▁▁▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▅█▇▇▅▁▄▄▅▇█ █
-  698 μs        Histogram: log(frequency) by time       3.64 ms <
+  █▄▂▂                                                          ▁
+  ██████▆▆▆▄▅▄▅▃▄▄▁▁▄▃▄▄▅▁▁▁▄▄▁▄▅▄▅▁▄▄▁▄▄▃▃▅▄▃▁▄▄▅▅▇▇▆▅▅▅▃▃▄▇▇▇ █
+  676 μs        Histogram: log(frequency) by time       4.16 ms <
 
- Memory estimate: 2.06 MiB, allocs estimate: 38705.
+ Memory estimate: 1.62 MiB, allocs estimate: 32681.
 
  =#
