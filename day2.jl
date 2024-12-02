@@ -48,3 +48,53 @@ BenchmarkTools.Trial: 5723 samples with 1 evaluation.
  Memory estimate: 1.62 MiB, allocs estimate: 32681.
 
  =#
+
+function is_safe_fast(levels)
+    increasing = levels[2] > levels[1]
+    return increasing ?
+           all(levels[i] < levels[i+1] && levels[i+1] - levels[i] ∈ 1:3 for i in 1:(length(levels)-1)) :
+           all(levels[i] > levels[i+1] && levels[i] - levels[i+1] ∈ 1:3 for i in 1:(length(levels)-1))
+end
+
+struct SkipArray
+    array::Vector{Int}
+    skip_index::Int
+end
+
+Base.length(A::SkipArray) = length(A.array) - 1
+Base.getindex(A::SkipArray, idx::Int) = idx >= A.skip_index ? A.array[idx+1] : A.array[idx]
+
+function is_safe_by_removing_one_level_fast(levels)
+    is_safe_fast(levels) && return true
+    return any(is_safe_fast, (SkipArray(levels, i) for i in 1:length(levels)))
+end
+
+part1_fast(data) = sum(is_safe_fast, data)
+
+part2_fast(data) = sum(is_safe_by_removing_one_level_fast, data)
+
+#= Fast benchmark results
+julia> @benchmark part1_fast($data)
+BenchmarkTools.Trial: 10000 samples with 5 evaluations.
+ Range (min … max):  5.958 μs …  13.233 μs  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     6.125 μs               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   6.141 μs ± 170.997 ns  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+           ▁   █▂▁▁▁▇▁▁ ▃
+  ▂▂▂▂▄▃▄▅▅█▇▇███████████▅▅▄▄▅▃▃▃▃▂▂▂▂▂▂▂▂▂▂▂▁▂▂▁▁▂▁▂▂▁▁▁▁▁▁▂ ▃
+  5.96 μs         Histogram: frequency by time        6.56 μs <
+
+ Memory estimate: 0 bytes, allocs estimate: 0.
+
+julia> @benchmark part2_fast($data)
+BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range (min … max):  60.708 μs … 106.875 μs  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     61.959 μs               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   62.000 μs ±   1.435 μs  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+   ▁▂▄▅▂        ▂█▆          ▂▂
+  ▄█████▇▅▄▃▂▂▂▅███▇▄▃▃▂▂▂▂▄▆██▅▃▃▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▁▂▂▂▂▂ ▃
+  60.7 μs         Histogram: frequency by time         65.8 μs <
+
+ Memory estimate: 0 bytes, allocs estimate: 0.
+=#
