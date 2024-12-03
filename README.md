@@ -4,6 +4,8 @@ Just some coding fun (still Julia 🤭)
 
 # Benchmarks
 
+Goal: execute under 1 ms.
+
 | Day | Part 1 | Part 2 | Notes         |
 | --- | ------ | ------ | ------------- |
 | 01  | 208 ns | 139 μs | optimized     |
