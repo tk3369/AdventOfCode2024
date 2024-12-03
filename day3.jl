@@ -2,6 +2,8 @@ function input()
     readlines("day3.txt")
 end
 
+data = input()
+
 function multiply(s)
     m = match(r"mul\(([0-9]+),([0-9]+)\)", s)
     return parse(Int, m.captures[1]) * parse(Int, m.captures[2])
