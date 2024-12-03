@@ -39,3 +39,40 @@ julia> @btime part1($data);
 julia> @btime part2($data);
   128.291 μs (4682 allocations: 222.53 KiB)
 =#
+
+using Luxor
+using Luxor: Movie, Scene, Point, text, sethue, move, background
+
+function draw(data)
+    sz = 400
+    ops = reduce(vcat, clean2(line) for line in data)
+    len = length(ops)
+    mymovie = Movie(sz, sz, "mymovie")
+    xs = [rand([-1, 1]) * rand(1:sz) for _ in 1:len]
+    ys = [rand([-1, 1]) * rand(1:sz) for _ in 1:len]
+    fs = [rand(18:40) for _ in 1:len]
+    cs = [rand(["blue", "red", "green", "purple", "yellow", "pink"]) for _ in 1:len]
+
+    function frame(scene::Scene, framenumber::Int64)
+        background("white")
+        fontface("Georgia")
+        fontsize(30)
+        text("Advent of Code Day 3", Point(0, -sz / 2 + 30); halign=:center)
+        fontface("Helvetica")
+        for i in 1:framenumber
+            if framenumber <= len
+                sethue(cs[i])
+                fontsize(fs[i])
+                text(ops[i], Point(xs[i], ys[i]))
+            else # final frames
+                fontsize(20)
+                sethue("blue")
+                text("Corrupted Memory :-(", O; halign=:center, valign=:middle)
+            end
+        end
+    end
+
+    animate(mymovie, [Scene(mymovie, frame, 1:(len+45*3))],
+        creategif=true, pathname="day3.gif",
+        framerate=45)
+end
