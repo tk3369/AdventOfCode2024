@@ -8,7 +8,7 @@ function walk(row, col, len, offsets)
     return ((row + offsets[1] * i, col + offsets[2] * i) for i in 0:len-1)
 end
 
-# Compose a word given the coordinates. A coordinate is ignore when instruction
+# Compose a word given the coordinates. A coordinate is ignored when instruction
 # is out of bound,
 function get_word(data, coordinates)
     nrows = size(data, 1)
