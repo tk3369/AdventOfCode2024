@@ -23,6 +23,31 @@ julia> @btime part2($rules, $updates)
 6767
 =#
 
+# Optimze rule lookup from a BitArray
+
+hash(x, y) = 100x + y
+function bit_rules(rules)
+    positions = [hash(r[1], r[2]) for r in rules]
+    bitarr = falses(10_100)  # max number of bits required
+    bitarr[positions] .= true
+    return bitarr
+end
+br = bit_rules(rules)
+lt2(x, y, br) = br[hash(x, y)] # lookup
+make_right2(br, update) = sort(update, lt=(x, y) -> lt2(x, y, br))
+part1_fast(br, updates) = sum(middle(u) for u in updates if issorted(u, lt=(x, y) -> lt2(x, y, br)))
+part2_fast(br, updates) = sum(middle(make_right2(br, u)) for u in updates if !issorted(u, lt=(x, y) -> lt2(x, y, br)))
+
+#=
+julia> @btime part1_fast($br, $updates)
+  1.154 μs (0 allocations: 0 bytes)
+4462
+
+julia> @btime part2_fast($br, $updates)
+  12.083 μs (406 allocations: 36.22 KiB)
+6767
+=#
+
 # Old implementation
 
 valid_after(x, rules) = [r[2] for r in rules if r[1] == x]
