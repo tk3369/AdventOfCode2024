@@ -10,15 +10,15 @@ rules, updates = input("day5.txt")
 middle(update) = update[length(update)÷2+1]
 lt(x, y, rules) = (x, y) ∈ rules
 make_right(rules, update) = sort(update, lt=(x, y) -> lt(x, y, rules))
-part1_fast(rules, updates) = sum(middle(u) for u in updates if issorted(u, lt=(x, y) -> lt(x, y, rules)))
-part2_fast(rules, updates) = sum(middle(make_right(rules, u)) for u in updates if !issorted(u, lt=(x, y) -> lt(x, y, rules)))
+part1(rules, updates) = sum(middle(u) for u in updates if issorted(u, lt=(x, y) -> lt(x, y, rules)))
+part2(rules, updates) = sum(middle(make_right(rules, u)) for u in updates if !issorted(u, lt=(x, y) -> lt(x, y, rules)))
 
 #=
-julia> @btime part1_fast($rules, $updates)
+julia> @btime part1($rules, $updates)
   496.916 μs (0 allocations: 0 bytes)
 4462
 
-julia> @btime part2_fast($rules, $updates)
+julia> @btime part2($rules, $updates)
   4.168 ms (406 allocations: 36.22 KiB)
 6767
 =#
