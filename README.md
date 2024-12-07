@@ -13,4 +13,5 @@ Goal: execute under 1 ms.
 | 3   | 169 μs | 128 μs |             |                                                    |
 | 4   | 908 μs | 369 μs | optimized   | avoid creating temporary strings just for matching |
 | 5   | 1 μs   | 12 μs  | optimized   | use custom O(1) rule lookup with bit array         |
-| 6   | 560 μs | 9.8s   |             | embarrassingly slow part2 :-p                      |
+| 6   | 560 μs | 2.7s   | optimized   | still pretty slow :-(                              |
+| 6   | 1 ms   | 717 ms | optimized   | binary/ternary system                              |
