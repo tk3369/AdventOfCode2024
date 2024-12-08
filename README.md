@@ -14,7 +14,7 @@ Goal: execute under 1 ms.
 | 4   | 908 μs | 369 μs | optimized   | avoid creating temporary strings just for matching        |
 | 5   | 1 μs   | 12 μs  | optimized   | use custom O(1) rule lookup with bit array                |
 | 6   | 560 μs | 2.7s   | optimized   | still pretty slow :-(                                     |
-| 7   | 1 ms   | 717 ms | optimized   | binary/ternary system                                     |
+| 7   | 1 ms   | 645 ms | optimized   | binary/ternary system                                     |
 | 8   | 11 μs  | 19 μs  | optimized   | fewer allocations to store Int tuples than CartesianIndex |
 
 My machine:
