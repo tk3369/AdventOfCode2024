@@ -86,11 +86,11 @@ part1_fast(data) = solve(data, :once)
 part2_fast(data) = solve(data, :forever)
 
 #=
-julia> @btime part1_clean($data)
-  15.834 μs (1405 allocations: 60.55 KiB)
+julia> @btime part1_fast($data)
+  11.208 μs (739 allocations: 53.06 KiB)
 252
 
-julia> @btime part2_clean($data)
-  41.750 μs (3358 allocations: 148.06 KiB)
+julia> @btime part2_fast($data)
+  19.208 μs (744 allocations: 121.16 KiB)
 839
 =#
