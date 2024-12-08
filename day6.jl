@@ -11,7 +11,7 @@ const CI = CartesianIndex
 
 # Returns true when it's possible to move forward
 # Boundary check is done separately
-can_move(pos, step, grid) = grid[pos+step] == '.'
+can_move(pos, step, grid) = grid[pos+step] === '.'
 
 # Returns true when moving forward will get off-board
 on_edge(pos, step, board) = pos + step ∉ board
@@ -109,6 +109,59 @@ end
 #=
 julia> @btime part2_fast($grid, $pos)
   609.383 ms (139467 allocations: 2.18 GiB)
+1482
+=#
+
+# Fastest version (some ideas from Peter Lustig)
+
+on_edge(target, board) = target ∉ board
+can_move(target, grid) = grid[target] == '.'
+
+function can_move_with_obstacle(target, grid, obstacle)
+    return grid[target] == '.' && target != obstacle
+end
+
+# make_container(grid) = Set{Tuple{Tuple{Int,Int},Int}}()
+# is_in(container, pos, dir) = (pos.I, dir) ∈ container
+# do_push!(container, pos, dir) = push!(container, (pos.I, dir))
+
+# Abstraction for storing visited cells
+make_container(grid) = falses(size(grid, 1), size(grid, 2), 4)
+is_in(container, pos, dir) = container[pos[1], pos[2], dir] == true
+do_push!(container, pos, dir) = container[pos[1], pos[2], dir] = true
+
+function stuck2(grid, pos, obstacle)
+    board = CartesianIndices(grid)
+    dir = 1 # up = 1, right = 2, down = 3, left = 4
+    steps = (CI(-1, 0), CI(0, 1), CI(1, 0), CI(0, -1))
+    visited = make_container(grid)
+    do_push!(visited, pos, dir)
+    while true
+        target = pos + steps[dir]
+        target ∉ board && break
+        if can_move_with_obstacle(target, grid, obstacle)
+            pos = target
+            is_in(visited, pos, dir) && return true
+            do_push!(visited, pos, dir)
+        else
+            dir = dir % 4 + 1
+        end
+    end
+    return false
+end
+
+function part2_fastest(grid, pos)
+    obstacles = [o for o in get_original_visited(grid, pos)]
+    results = falses(length(obstacles))
+    Threads.@threads for i in 1:length(obstacles)
+        results[i] = stuck2(grid, pos, obstacles[i])
+    end
+    return sum(results)
+end
+
+#=
+julia> @btime part2_fastest($grid, $pos)
+  12.217 ms (19947 allocations: 41.64 MiB)
 1482
 =#
 
