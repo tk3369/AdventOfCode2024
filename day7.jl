@@ -12,6 +12,7 @@ function find_ops(ops, equation)
         val = operands[1]
         for i in 2:length(operands)
             val = application[i-1](val, operands[i])
+            val > ans && break
         end
         val == ans && return ans
     end
@@ -78,6 +79,7 @@ function find_ops_ternary(equation)
             else
                 val = concat(val, operands[i+2])
             end
+            val > ans && break
         end
         val == ans && return ans
     end
@@ -89,10 +91,10 @@ part2_fast(data) = sum(find_ops_ternary(equation) for equation in data)
 
 #=
 julia> @btime part1_fast($data)
-  1.267 ms (0 allocations: 0 bytes)
+  1.266 ms (0 allocations: 0 bytes)
 2314935962622
 
 julia> @btime part2_fast($data)
-  717.083 ms (0 allocations: 0 bytes)
+  644.952 ms (0 allocations: 0 bytes)
 401477450831495
 =#
