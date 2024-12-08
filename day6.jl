@@ -7,7 +7,7 @@ end
 
 grid, pos = input("day6.txt")
 
-CI = CartesianIndex
+const CI = CartesianIndex
 
 # Returns true when it's possible to move forward
 # Boundary check is done separately
@@ -44,7 +44,6 @@ end
 # (pos,dir) tuple now unlike part 1.
 function stuck(grid, pos, obstacle)
     board = CartesianIndices(grid)
-    CI = CartesianIndex
     dir = 1 # up = 1, right = 2, down = 3, left = 4
     steps = (CI(-1, 0), CI(0, 1), CI(1, 0), CI(0, -1))
     grid = copy(grid) # make a copy to inject an obstacle
@@ -71,12 +70,12 @@ function part2(grid, pos)
 end
 
 #=
-julia> @btime part1(grid, pos)
-  559.792 μs (33900 allocations: 1.39 MiB)
+julia> @btime part1($grid, $pos)
+  101.959 μs (27 allocations: 363.36 KiB)
 4973
 
-julia> @btime part2(grid, pos)
-  9.775 s (479492538 allocations: 22.81 GiB)
+julia> @btime part2($grid, $pos)
+  2.671 s (472530 allocations: 8.54 GiB)
 1482
 =#
 
@@ -108,10 +107,12 @@ function part2_fast(grid, pos)
 end
 
 #=
-julia> @btime part2($grid, $pos)
-  2.750 s (472530 allocations: 8.54 GiB)
+julia> @btime part2_fast($grid, $pos)
+  609.383 ms (139467 allocations: 2.18 GiB)
 1482
 =#
+
+# ====== work in progress animation ======
 
 # using Luxor
 
