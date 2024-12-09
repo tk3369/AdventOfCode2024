@@ -10,12 +10,13 @@ Goal: execute under 1 ms.
 | --- | ------ | ------ | ----------------- | -------------------------------------------------- |
 | 1   | 208 ns | 139 μs | optimized         | avoid broadcasting that allocates array            |
 | 2   | 6 μs   | 61 μs  | optimized         | avoid creating arrays that just skip an element    |
-| 3   | 169 μs | 128 μs |                   |                                                    |
+| 3   | 169 μs | 128 μs | n/a               |                                                    |
 | 4   | 908 μs | 369 μs | optimized         | avoid creating temporary strings just for matching |
 | 5   | 1 μs   | 12 μs  | optimized         | use custom O(1) rule lookup with bit array         |
 | 6   | 101 μs | 12 ms  | needs improvement | bit array lookup, multi-threading, const global    |
 | 7   | 1 ms   | 645 ms | needs improvement | binary/ternary system                              |
 | 8   | 6 μs   | 7 μs   | optimized         | bit array lookup                                   |
+| 9   | 385 μs | 31 ms  | pending           |                                                    |
 
 My machine:
 ```
