@@ -2,6 +2,12 @@ input(filename) = [parse(Int, c) for c in chomp(readline(filename))]
 
 data = input("day9.txt")
 
+#=
+Brute force algorithm. Explode the compressed form to an array.
+Free spaces are reprented as -1. Then, defrag operation simply
+move elements around in the array.
+=#
+
 function explode(data)
     v = Int[]
     space = -1
@@ -20,9 +26,10 @@ function explode(data)
     return v
 end
 
-#=
-Free spaces are reprented as -1.
-=#
+# Start from beginning of the array and find the next gap.
+# Then, take the data from the rightmost position (tracked
+# by the `k` variable) and move it. If index `k` already
+# surpassed index `i` then we know it's done.
 function defrag(data)
     space = -1
     data = explode(data)
