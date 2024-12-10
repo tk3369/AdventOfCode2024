@@ -2,7 +2,7 @@
 
 julia_version = "1.11.2"
 manifest_format = "2.0"
-project_hash = "a51160517b5c2d15a6aa6d5632498bc7331e0b94"
+project_hash = "b6bfcca82d6b175af245c6a2209737487f074faf"
 
 [[deps.AllocCheck]]
 deps = ["ExprTools", "GPUCompiler", "LLVM", "MacroTools"]
