@@ -18,6 +18,7 @@ Goal: execute under 1 ms.
 | 8   | 6 μs   | 7 μs   | optimized         | bit array lookup                                   |
 | 9   | 385 μs | 31 ms  | pending           |                                                    |
 | 10  | 71 μs  | 71 μs  | optimized         |                                                    |
+| 10  | 10 ms  | 10 ms  | needs improvement |                                                    |
 
 My machine:
 ```
