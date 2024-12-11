@@ -19,27 +19,10 @@ blink(xs) = Iterators.flatten(transform(x) for x in xs) |> collect
 
 part1(xs, n) = n == 0 ? xs : part1(blink(xs), n - 1)
 
-function add_stone!(dct, x, cnt)
-    if haskey(dct, x)
-        dct[x] += cnt
-    else
-        dct[x] = cnt
-    end
-end
-
-function remove_stone!(dct, x, cnt)
-    if haskey(dct, x)
-        if dct[x] > cnt
-            dct[x] -= cnt
-        else
-            delete!(dct, x)
-        end
-    else
-        @error "Stone $x not found"
-    end
-end
-
 #=
+Part 1 implementation is too memory intensive since it keeps track
+of all stones.
+
 Part 2 is the same problem with a scalability issue (75 levels).
 So we cannot use the same logic from part 1.
 
@@ -64,6 +47,26 @@ function part2(xs, n)
         end
     end
     return stones |> values |> sum
+end
+
+function add_stone!(dct, x, cnt)
+    if haskey(dct, x)
+        dct[x] += cnt
+    else
+        dct[x] = cnt
+    end
+end
+
+function remove_stone!(dct, x, cnt)
+    if haskey(dct, x)
+        if dct[x] > cnt
+            dct[x] -= cnt
+        else
+            delete!(dct, x)
+        end
+    else
+        @error "Stone $x not found"
+    end
 end
 
 #=
