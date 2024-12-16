@@ -91,6 +91,8 @@ end
 #=
 julia> part1(robots, 101, 103)
 ([117, 127, 123, 125], 228457125)
+
+julia> part2_plot(robots, 101, 103, 433:101:7000)
 =#
 
 # Prior arts
