@@ -56,7 +56,7 @@ end
 function make_grid(robots, w, h)
     grid = zeros(Int, h, w)
     for r in robots
-        grid[r.y+1, r.x+1] += 1  # ignore overlaps
+        grid[r.y+1, r.x+1] += 1
     end
     return grid
 end
